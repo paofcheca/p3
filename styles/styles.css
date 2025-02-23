@@ -1,0 +1,431 @@
+/* Reset de márgenes y padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilo general */
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  background-color: #35654d; /* Fondo verde estilo tapete */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* Header y Footer */
+header, footer {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+
+  font-size: 2.5rem;
+  font-family:'Phudu';
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  margin-bottom: 10px;
+  color: #f9f9f8; 
+}
+
+/* Contador de turnos y botón de reinicio */
+header .stats {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+}
+
+#turns {
+  font-size: 1.3rem;
+  padding: 5px 15px;
+  border-radius: 8px;
+  background-color: #4772f3;
+  font-family:'Phudu';
+  border: 2px solid #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+#restart {
+  padding: 8px 16px;
+  font-size: 1.1rem;
+  font-family:'Phudu';
+  border: none;
+  border-radius: 8px;
+  background-color: #ff5722;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#restart:hover {
+  background-color: #e64a19;
+  transform: scale(1.1);
+}
+
+/* Contenedor principal */
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Tablero de juego */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  justify-items: center;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Carta */
+.card {
+  width: 100px;
+  height: 140px;
+  position: relative;
+  cursor: pointer;
+  perspective: 1000px;
+  border-radius: 12px;
+  background-color: transparent;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+/* Estructura interna para el efecto flip */
+.card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+/* Efecto de giro al voltear */
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Caras de la carta */
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Cara trasera con patrón */
+.card-back {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Card_back_06.svg/640px-Card_back_06.svg.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+}
+
+/* Cara frontal (imagen) */
+.card-front {
+  transform: rotateY(180deg);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Mensaje de victoria */
+#victory-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 128, 0, 0.9);
+  color: #fff;
+  padding: 20px 40px;
+  border-radius: 12px;
+  font-size: 2rem;
+  display: none;
+  z-index: 999;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Selector de temática */
+#theme-selector {
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: 2px solid #fff;
+  background-color: #a111aea6;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#theme-selector:hover {
+  background-color: #a111aea6;
+}
+
+/*TRIVIAL*/
+/* Fondo del modal */
+#trivia-modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #f0f8ff, #d4e9f9);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  z-index: 1000;
+  text-align: center;
+}
+
+/* Fondo oscuro al abrir la trivia */
+#trivia-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+}
+
+/* Título de la pregunta */
+#trivia-pregunta {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  border-bottom: 3px solid #3498db;
+  padding-bottom: 10px;
+}
+
+/* Botones de opciones */
+#trivia-opciones button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+  margin: 5px;
+  width: 45%;
+  height: 50px;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+/* Colores aleatorios para las opciones */
+#trivia-opciones button:nth-child(1) { background-color: #e74c3c; } /* Rojo */
+#trivia-opciones button:nth-child(2) { background-color: #f39c12; } /* Naranja */
+#trivia-opciones button:nth-child(3) { background-color: #27ae60; } /* Verde */
+#trivia-opciones button:nth-child(4) { background-color: #2980b9; } /* Azul */
+
+/* Animación al pasar el ratón */
+#trivia-opciones button:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+/* Animación para respuestas correctas e incorrectas */
+button.correct { background-color: #2ecc71 !important; } /* Verde */
+button.incorrect { background-color: #e74c3c !important; } /* Rojo */
+
+/* Botón cerrar */
+#trivia-modal button#cerrar-trivia {
+  margin-top: 15px;
+  background-color: #95a5a6;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#trivia-modal button#cerrar-trivia:hover {
+  background-color: #7f8c8d;
+}
+
+/*  Widget de Clima  */
+#widget-clima {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro para mejor contraste */
+  border-radius: 10px;
+  padding: 10px;
+  width: 120px; /* Más pequeño */
+  text-align: center;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  font-family: Arial, sans-serif;
+  color: #fff; /* Letras blancas */
+  z-index: 1000;
+}
+
+#widget-clima h4 {
+  margin: 0 0 8px 0;
+  font-size: 0.9rem; /* Tamaño reducido */
+  color: #f1c40f;
+}
+
+#widget-clima img {
+  width: 40px;
+  height: 40px;
+}
+
+#widget-clima p {
+  margin: 3px 0;
+  font-size: 0.8rem; /* amaño más pequeño */
+  color: #ecf0f1;
+}
+
+/* Widget de Información del Juego */
+#widget-info {
+  position: fixed;
+  bottom: 20px; 
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.85); /* Fondo oscuro */
+  border-radius: 10px;
+  padding: 12px;
+  width: px;
+  text-align: left;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  font-family: Arial, sans-serif;
+  color: #fff;
+  z-index: 1000;
+}
+
+#widget-info h4 {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  color: #f39c12; /* Color destacado */
+}
+
+#widget-info p {
+  margin: 5px 0;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+/* Cajetín de Cita */
+#banner-cita {
+  background: rgba(0, 0, 0, 85);
+  color: #ecf0f1;
+  padding: 16px 20px;
+  border-radius: 12px;
+  width: 280px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  position: fixed;
+  top: 150px; /* Justo debajo del header */
+  right: 20px;
+  z-index: 1000;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Animación al pasar el cursor */
+#banner-cita:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Texto de la cita */
+#banner-cita #texto-cita {
+  font-style: italic;
+  font-size: 1rem;
+  color: #f1c40f;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+/* Autor */
+#banner-cita #autor-cita {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #bdc3c7;
+  margin-bottom: 10px;
+}
+
+/* Botón Mejorado */
+#banner-cita button {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 20px;
+  background-color: #3498db;
+  color: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s ease, transform 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+#banner-cita button:hover {
+  background-color: #2980b9;
+  transform: scale(1.1);
+}
+
+/* Animación de entrada */
+@keyframes fadeInBanner {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#banner-cita {
+  animation: fadeInBanner 0.5s ease-in-out;
+}
+
+
+
+
+
+/* Adaptación a móviles */
+@media (max-width: 600px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card {
+    width: 80px;
+    height: 110px;
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+  }
+}

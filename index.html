@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Memoria - Pares de Cartas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Phudu&display=swap" rel="stylesheet"> <!-- Nueva fuente -->
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <header>
+        <h1>♠️ DUELO DE MEMORIA: ENCUENTRA LAS PAREJAS ♥️</h1>
+        <div class="stats">
+            <span id="turns">Turnos: 0</span>
+            <select id="theme-selector">
+                <option value="frenchdeck">Baraja Francesa</option>
+                <option value="pokemon">Pokémon</option>
+                <option value="rickandmorty">Ricky & Morty</option>
+                <option value="art">Obras de arte</option>
+            </select>
+            <button id="restart">Reiniciar Juego</button>
+
+        </div>
+    </header>
+    
+
+    <main>
+        <div id="game-board" class="grid-container"></div>
+    </main>
+
+    <div id="victory-message">🎉 ¡Ganaste! 🎉</div>
+
+    <!-- Modal de Trivia -->
+    <div id="trivia-modal">
+        <h3 id="trivia-pregunta">Pregunta aquí</h3>
+        <div id="trivia-opciones"></div>
+        <button id="cerrar-trivia" onclick="cerrarTrivia()">Cerrar</button>
+    </div>
+
+    <!-- Fondo Oscuro -->
+    <div id="trivia-overlay"></div>
+
+    <!-- Widget de Clima -->
+    <div id="widget-clima"></div>
+
+    <!-- Widget de Información del Juego -->
+    <div id="widget-info">
+        <h4>ℹ️ Cómo Jugar</h4>
+        <p>🎯 Encuentra todas las parejas de cartas.</p>
+        <p>🧠 Cada <strong>3 turnos</strong> aparece una pregunta de trivial.</p>
+        <p>💡 Puedes seleccionar la temática de las cartas con el desplegable</p>
+    
+    </div>
+
+        <!-- Banner de Cita Célebre -->
+    <div id="banner-cita">
+        <p id="texto-cita">"Haz clic en el botón para obtener una cita célebre."</p>
+        <p id="autor-cita"><strong>- Autor</strong></p>
+        <button id="nueva-cita-btn">🔄 Nueva Cita</button>
+    </div>
+    
+    <footer>
+        <p>Paola Fdez-Checa, Programación Aplicaciones Telemáticas</p>
+    </footer>
+
+    <script src="scripts/script.js"></script>
+</body>
+</html>
