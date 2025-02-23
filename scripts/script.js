@@ -328,17 +328,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function obtenerCitaBanner() {
   try {
-    const apiUrl = 'https://zenquotes.io/api/random';
+    const apiUrl = `https://zenquotes.io/api/random?timestamp=${new Date().getTime()}`;
     const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
 
     const response = await fetch(proxyUrl);
     const data = await response.json();
 
-    // AllOrigins devuelve la respuesta en 'contents'
-    const parsedData = JSON.parse(data.contents);
+    if (data && data.contents) {
+      const parsedData = JSON.parse(data.contents);
+      document.getElementById('texto-cita').textContent = `"${parsedData[0].q}"`;
+      document.getElementById('autor-cita').textContent = `- ${parsedData[0].a}`;
+    } else {
+      throw new Error("Respuesta inesperada de la API");
+    }
 
-    document.getElementById('texto-cita').textContent = `"${parsedData[0].q}"`;
-    document.getElementById('autor-cita').textContent = `- ${parsedData[0].a}`;
   } catch (error) {
     console.error("⚠️ Error al obtener la cita con AllOrigins:", error);
     document.getElementById('texto-cita').textContent = "⚠️ No se pudo obtener la cita.";
@@ -348,9 +351,9 @@ async function obtenerCitaBanner() {
 
 
 
-// ✅ Event Listener para el botón
+// Event Listener para el botón
 document.getElementById('nueva-cita-btn').addEventListener('click', obtenerCitaBanner);
 
-// ⚡ Cargar una cita inicial al cargar la página
+// Cargar una cita inicial al cargar la página
 window.onload = obtenerCitaBanner;
 
